@@ -1,0 +1,114 @@
+const { DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
+    sequelize.define(
+        'Product',
+        {
+            image: {
+                type: DataTypes.STRING,
+                allowNull: true,
+
+            },
+            name: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            code: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            stock: {
+                type: DataTypes.FLOAT, //cabiado a FLOAT
+                allowNull: false,
+                defaultValue: 0,
+            },
+            minStock: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                defaultValue: 0,
+                validate: {
+                    min: 0,
+                },
+            },
+            cost: {
+                type: DataTypes.DECIMAL(10, 2),
+                allowNull: false,
+                validate: {
+                    min: 0,
+                },
+            },
+            iva: {
+                type: DataTypes.DECIMAL(10, 2),
+                allowNull: false,
+                defaultValue: 0,
+                validate: {
+                    min: 0,
+                    max: 100,
+                },
+            },
+            profit: {
+                type: DataTypes.DECIMAL(10, 2),
+                allowNull: false,
+                defaultValue: 0,
+                validate: {
+                    min: 0,
+                },
+            },
+            profit_amount: {
+                type: DataTypes.DECIMAL(10, 2),
+                allowNull: false,
+                defaultValue: 0, // Aquí se almacenará la ganancia exacta
+            },
+            price: {
+                type: DataTypes.DECIMAL(10, 2),
+                allowNull: false,
+                defaultValue: 0,
+            },
+            isActive: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true,
+            },
+
+            category: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                defaultValue: 'General',
+            },
+            provider: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                defaultValue: 'Otros',
+            }
+        },
+        {
+            timestamps: true,
+            freezeTableName: true,
+            hooks: {
+                beforeCreate: (product) => {
+                    const cost = parseFloat(product.cost) || 0;
+                    const ivaRate = parseFloat(product.iva) / 100 || 0;
+                    const profitRate = parseFloat(product.profit) / 100 || 0;
+
+                    const totalCost = cost + (cost * ivaRate);
+                    product.price = totalCost + (totalCost * profitRate);
+                    product.profit_amount = product.price - totalCost; // Calcula y almacena la ganancia exacta
+
+                    product.isActive = product.stock >= 2;
+                },
+                beforeUpdate: (product) => {
+                    const cost = parseFloat(product.cost) || 0;
+                    const ivaRate = parseFloat(product.iva) / 100 || 0;
+                    const profitRate = parseFloat(product.profit) / 100 || 0;
+
+                    const totalCost = cost + (cost * ivaRate);
+                    product.price = totalCost + (totalCost * profitRate);
+                    product.profit_amount = product.price - totalCost;
+
+                    if (product.changed('stock')) {
+                        product.isActive = product.stock >= 2;
+                    }
+                },
+            },
+        }
+    );
+};
