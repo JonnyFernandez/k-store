@@ -39,7 +39,7 @@ module.exports = (sequelize) => {
             },
             iva: {
                 type: DataTypes.DECIMAL(10, 2),
-                allowNull: false,
+                allowNull: true,
                 defaultValue: 0,
                 validate: {
                     min: 0,
