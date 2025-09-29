@@ -6,6 +6,7 @@ const os = require("os");
 const UserModel = require("./models/user.model");
 const ProdModel = require("./models/prod.model");
 const ProviderModel = require('./models/provider.model')
+const CategoryModel = require('./models/category.model')
 
 
 const dirPath = path.join(os.homedir(), ".miApp");
@@ -37,6 +38,10 @@ async function syncDatabase() {
 UserModel(sequelize); // Pasa la instancia de Sequelize al modelo
 ProdModel(sequelize); // Pasa la instancia de Sequelize al modelo
 ProviderModel(sequelize); // Pasa la instancia de Sequelize al modelo
+CategoryModel(sequelize); // Pasa la instancia de Sequelize al modelo
+
+// console.log(sequelize.models.Category);
+
 
 
 module.exports = {
@@ -45,6 +50,7 @@ module.exports = {
     User: sequelize.models.User,
     Prod: sequelize.models.Product,
     Provider: sequelize.models.Provider,
+    Category: sequelize.models.Category,
 };
 
 
