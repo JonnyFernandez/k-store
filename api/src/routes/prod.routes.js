@@ -1,47 +1,106 @@
 const { Router } = require('express');
 
-
-
-
+const Ctrl = require('../controllers/prod.controller')
 
 const prodRouter = Router();
 // Aquí irán las rutas relacionadas con los productos
 // Ejemplo:
 prodRouter.post('/products', async (req, res) => {
-    // Lógica para crear un producto
-});
-prodRouter.get('/product/:id', async (req, res) => {
-    // Lógica para crear un producto
+    try {
+        const data = req.body
+        const aux = await Ctrl.createProd(data)
+        return res.status(201).json(aux)
+    } catch (error) {
+        return res.status(400).json({ message: error.message })
+    }
 });
 prodRouter.get('/products', async (req, res) => {
-    // Lógica para crear un producto
+    try {
+        const { name } = req.query;
+        const aux = await Ctrl.getProds(name)
+        return res.status(201).json(aux)
+    } catch (error) {
+        return res.status(400).json({ message: error.message })
+    }
 });
-
-prodRouter.put('/products/:id', async (req, res) => {
-    // Lógica para crear un producto
+prodRouter.get('/product/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const aux = await Ctrl.getProdById(id)
+        return res.status(201).json(aux)
+    } catch (error) {
+        return res.status(400).json({ message: error.message })
+    }
 });
-
-prodRouter.delete('/products/:id', async (req, res) => {
-    // Lógica para crear un producto
+prodRouter.put('/product/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = req.body
+        const aux = await Ctrl.updateProd(id, data)
+        return res.status(201).json(aux)
+    } catch (error) {
+        return res.status(400).json({ message: error.message })
+    }
+});
+prodRouter.delete('/product/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const aux = await Ctrl.deleteProd(id)
+        return res.status(201).json(aux)
+    } catch (error) {
+        return res.status(400).json({ message: error.message })
+    }
 });
 
 // -------------------------------------
 prodRouter.get('/products/low-stock', async (req, res) => {
-    // Lógica para obtener productos con stock bajo
+    try {
+        const aux = await Ctrl.prodLowStock()
+        return res.status(201).json(aux)
+    } catch (error) {
+        return res.status(400).json({ message: error.message })
+    }
 });
 
-prodRouter.get('/products/category/:category', async (req, res) => {
-    // Lógica para obtener productos por categoría
-});
-prodRouter.get('/products/provider/:provider', async (req, res) => {
-    // Lógica para obtener productos por categoría
+prodRouter.put('/products/category/:category/profit/:profit', async (req, res) => {
+    try {
+        const { category, profit } = req.params;
+
+        const aux = await Ctrl.updateProfitByCategory(category, profit);
+
+        return res.status(200).json(aux);
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
 });
 
-prodRouter.put('/products/category/:category/profit', async (req, res) => {
-    // Lógica para actualizar el porcentaje de ganancia por categoría
+prodRouter.put('/products/provider/:provider/profit/:profit', async (req, res) => {
+    try {
+        const { provider, profit } = req.params;
+        const aux = await Ctrl.updateProfitByProvider(provider, profit);
+        return res.status(200).json(aux);
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
 });
-prodRouter.put('/products/provider/:provider/profit', async (req, res) => {
-    // Lógica para actualizar el porcentaje de ganancia por proveedor
+
+prodRouter.get('/products/category', async (req, res) => {
+    const { category } = req.query;
+    try {
+        const aux = await Ctrl.getProdByCategory(category)
+        return res.status(200).json(aux)
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+});
+prodRouter.get('/products/provider', async (req, res) => {
+    const { provider } = req.query;
+    try {
+        const aux = await Ctrl.getProdByProvider(provider)
+        return res.status(200).json(aux)
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
 });
 
 

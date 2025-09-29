@@ -24,15 +24,12 @@ const sequelize = new Sequelize({
 async function syncDatabase() {
     try {
 
-        await sequelize.sync({ alter: true }); // `alter: true` actualiza la tabla si hay cambios
+        await sequelize.sync({ force: true }); // `alter: true` actualiza la tabla si hay cambios
 
     } catch (error) {
         console.error("Error al sincronizar la base de datos:", error);
     }
 }
-
-
-
 
 
 // Define el modelo de Usuario
@@ -41,10 +38,10 @@ ProdModel(sequelize); // Pasa la instancia de Sequelize al modelo
 
 
 module.exports = {
-    // sequelize,
+    sequelize,
     conn: syncDatabase,
     User: sequelize.models.User,
-    Prod: sequelize.models.Prod,
+    Prod: sequelize.models.Product,
 
 };
 
