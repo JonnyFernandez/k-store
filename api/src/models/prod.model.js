@@ -7,7 +7,6 @@ module.exports = (sequelize) => {
             image: {
                 type: DataTypes.STRING,
                 allowNull: true,
-
             },
             name: {
                 type: DataTypes.STRING,
@@ -18,7 +17,7 @@ module.exports = (sequelize) => {
                 allowNull: true,
             },
             stock: {
-                type: DataTypes.FLOAT, //cabiado a FLOAT
+                type: DataTypes.FLOAT,
                 allowNull: false,
                 defaultValue: 0,
             },
@@ -37,15 +36,6 @@ module.exports = (sequelize) => {
                     min: 0,
                 },
             },
-            iva: {
-                type: DataTypes.DECIMAL(10, 2),
-                allowNull: true,
-                defaultValue: 0,
-                validate: {
-                    min: 0,
-                    max: 100,
-                },
-            },
             profit: {
                 type: DataTypes.DECIMAL(10, 2),
                 allowNull: false,
@@ -54,12 +44,26 @@ module.exports = (sequelize) => {
                     min: 0,
                 },
             },
-            profit_amount: {
+            discount: {
                 type: DataTypes.DECIMAL(10, 2),
-                allowNull: false,
-                defaultValue: 0, // Aquí se almacenará la ganancia exacta
+                allowNull: true,
+                defaultValue: 0,
+                validate: {
+                    min: 0,
+                    max: 100,
+                },
             },
             price: {
+                type: DataTypes.DECIMAL(10, 2),
+                allowNull: false,
+                defaultValue: 0,
+            },
+            discountedPrice: {
+                type: DataTypes.DECIMAL(10, 2),
+                allowNull: false,
+                defaultValue: 0,
+            },
+            profit_amount: {
                 type: DataTypes.DECIMAL(10, 2),
                 allowNull: false,
                 defaultValue: 0,
@@ -68,7 +72,6 @@ module.exports = (sequelize) => {
                 type: DataTypes.BOOLEAN,
                 defaultValue: true,
             },
-
             category: {
                 type: DataTypes.STRING,
                 allowNull: true,
@@ -86,26 +89,28 @@ module.exports = (sequelize) => {
             hooks: {
                 beforeCreate: (product) => {
                     const cost = parseFloat(product.cost) || 0;
-                    const ivaRate = parseFloat(product.iva) / 100 || 0;
                     const profitRate = parseFloat(product.profit) / 100 || 0;
+                    const discountRate = parseFloat(product.discount) / 100 || 0;
 
-                    const totalCost = cost + (cost * ivaRate);
-                    product.price = totalCost + (totalCost * profitRate);
-                    product.profit_amount = product.price - totalCost; // Calcula y almacena la ganancia exacta
+                    const priceWithoutDiscount = cost + (cost * profitRate);
+                    product.price = priceWithoutDiscount;
+                    product.discountedPrice = priceWithoutDiscount - (priceWithoutDiscount * discountRate);
+                    product.profit_amount = product.discountedPrice - cost;
 
-                    product.isActive = product.stock >= 2;
+                    product.isActive = product.stock > 1;
                 },
                 beforeUpdate: (product) => {
                     const cost = parseFloat(product.cost) || 0;
-                    const ivaRate = parseFloat(product.iva) / 100 || 0;
                     const profitRate = parseFloat(product.profit) / 100 || 0;
+                    const discountRate = parseFloat(product.discount) / 100 || 0;
 
-                    const totalCost = cost + (cost * ivaRate);
-                    product.price = totalCost + (totalCost * profitRate);
-                    product.profit_amount = product.price - totalCost;
+                    const priceWithoutDiscount = cost + (cost * profitRate);
+                    product.price = priceWithoutDiscount;
+                    product.discountedPrice = priceWithoutDiscount - (priceWithoutDiscount * discountRate);
+                    product.profit_amount = product.discountedPrice - cost;
 
                     if (product.changed('stock')) {
-                        product.isActive = product.stock >= 2;
+                        product.isActive = product.stock > 1;
                     }
                 },
             },

@@ -1,14 +1,25 @@
-const { Prod } = require("../db");
+const { Product: Prod } = require("../db");
 const { Op } = require("sequelize");
 
 
 module.exports = {
     createProd: async (data) => {
-        let code = data.code
+        let { code } = data
         const match = await Prod.findOne({ where: { code } });
         if (match) throw new Error("El código ya está en uso");
         const newProd = await Prod.create(data);
-        return newProd;
+
+        const productForClient = {
+            id: newProd.id,
+            name: newProd.name,
+            code: newProd.code,
+            stock: newProd.stock,
+            discount: newProd.discount,
+            price: newProd.price,
+            discountedPrice: newProd.discountedPrice,
+
+        }
+        return productForClient;
     },
     getProds: async (name) => {
         // Si no se proporciona un nombre, devuelve todos los productos
@@ -39,12 +50,12 @@ module.exports = {
         return prod;
 
     },
-    updateProd: async (id, { image, name, code, stock, minStock, cost, profit, status, category, provider }) => {
+    updateProd: async (id, { image, name, code, stock, minStock, cost, profit, discount, status, category, provider }) => {
         const prod = await Prod.findByPk(id);
         if (!prod) {
             throw new Error("Producto no encontrado");
         }
-        await prod.update({ image, name, code, stock, minStock, cost, profit, status, category, provider });
+        await prod.update({ image, name, code, stock, minStock, cost, profit, discount, status, category, provider });
         return prod;
 
     },

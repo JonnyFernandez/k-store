@@ -7,7 +7,8 @@ const UserModel = require("./models/user.model");
 const ProdModel = require("./models/prod.model");
 const ProviderModel = require('./models/provider.model')
 const CategoryModel = require('./models/category.model')
-
+const OrderModel = require('./models/Order.model')
+const Order_ProductModel = require('./models/order_Product')
 
 const dirPath = path.join(os.homedir(), ".miApp");
 if (!fs.existsSync(dirPath)) {
@@ -36,21 +37,30 @@ async function syncDatabase() {
 
 // Define el modelo de Usuario
 UserModel(sequelize); // Pasa la instancia de Sequelize al modelo
-ProdModel(sequelize); // Pasa la instancia de Sequelize al modelo
-ProviderModel(sequelize); // Pasa la instancia de Sequelize al modelo
-CategoryModel(sequelize); // Pasa la instancia de Sequelize al modelo
-
+ProdModel(sequelize);
+ProviderModel(sequelize);
+CategoryModel(sequelize);
+OrderModel(sequelize);
+Order_ProductModel(sequelize);
 // console.log(sequelize.models.Category);
 
+// Accede a los modelos desde la instancia de Sequelize
+const { User, Product, Provider, Category, Order, Order_Product } = sequelize.models;
+
+Order.belongsToMany(Product, { through: Order_Product });
+Product.belongsToMany(Order, { through: Order_Product });
+// console.log(sequelize.models);
 
 
 module.exports = {
-    sequelize,
+    ...sequelize.models,
     conn: syncDatabase,
-    User: sequelize.models.User,
-    Prod: sequelize.models.Product,
-    Provider: sequelize.models.Provider,
-    Category: sequelize.models.Category,
+    // User: sequelize.models.User,
+    // Prod: sequelize.models.Product,
+    // Provider: sequelize.models.Provider,
+    // Category: sequelize.models.Category,
+    // Order: sequelize.models.Order,
+    // Order_Product: sequelize.models.Order_Product,
 };
 
 
