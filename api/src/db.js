@@ -55,6 +55,7 @@ Product.belongsToMany(Order, { through: Order_Product });
 module.exports = {
     ...sequelize.models,
     conn: syncDatabase,
+    sequelize
     // User: sequelize.models.User,
     // Prod: sequelize.models.Product,
     // Provider: sequelize.models.Provider,

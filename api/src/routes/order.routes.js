@@ -1,77 +1,95 @@
-const Ctrl = require('../controllers/order.controller')
-const { Router } = require('express')
+const Ctrl = require('../controllers/order.controller');
+const { Router } = require('express');
 
+const orderRouter = Router();
 
-const orderRouter = Router()
-
-
-
+// Crear una nueva orden con productos
 orderRouter.post('/order', async (req, res) => {
     try {
-        const data = req.body;
-        const aux = await Ctrl.createOrder(data)
-        return res.status(201).json(aux)
+        const { orderData, products } = req.body;
+        const newOrder = await Ctrl.createOrder(orderData, products);
+        return res.status(201).json(newOrder);
     } catch (error) {
-        return res.status(400).json({ message: error.message })
+        return res.status(400).json({ message: error.message });
     }
 });
+
+// Obtener todas las órdenes (opcionalmente filtrado por código)
 orderRouter.get('/order', async (req, res) => {
     try {
-        const { code } = req.query
-        const aux = await Ctrl.gerOrders(code)
-        return res.status(201).json(aux)
+        const { code } = req.query;
+        const orders = await Ctrl.getOrders(code);
+        return res.status(200).json(orders);
     } catch (error) {
-        return res.status(400).json({ message: error.message })
+        return res.status(400).json({ message: error.message });
     }
 });
+
+// Obtener una orden por ID
 orderRouter.get('/order/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const aux = await Ctrl.gerOrdersById(id)
-        return res.status(201).json(aux)
+        const order = await Ctrl.getOrderById(id);
+        if (!order) {
+            return res.status(404).json({ message: 'Orden no encontrada.' });
+        }
+        return res.status(200).json(order);
     } catch (error) {
-        return res.status(400).json({ message: error.message })
+        return res.status(400).json({ message: error.message });
     }
 });
+
+// Actualizar una orden
 orderRouter.put('/order/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const data = req.params;
-        const aux = await Ctrl.updateOrders(id, data)
-        return res.status(201).json(aux)
+        const data = req.body;
+        const updatedOrder = await Ctrl.updateOrder(id, data);
+        if (!updatedOrder) {
+            return res.status(404).json({ message: 'Orden no encontrada.' });
+        }
+        return res.status(200).json(updatedOrder);
     } catch (error) {
-        return res.status(400).json({ message: error.message })
+        return res.status(400).json({ message: error.message });
     }
 });
+
+// Eliminar una orden
 orderRouter.delete('/order/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const aux = await Ctrl.deleteOrders(id)
-        return res.status(201).json(aux)
+        const deleted = await Ctrl.deleteOrder(id);
+        if (!deleted) {
+            return res.status(404).json({ message: 'Orden no encontrada.' });
+        }
+        return res.status(200).json({ message: 'Orden eliminada exitosamente.' });
     } catch (error) {
-        return res.status(400).json({ message: error.message })
+        return res.status(400).json({ message: error.message });
     }
 });
-orderRouter.get('/order-statistic/:dale1/date2/:date2', async (req, res) => {
+
+// Estadísticas
+// Se corrige la URL y los nombres de las variables
+orderRouter.get('/order-statistics/:date1/to/:date2', async (req, res) => {
     try {
         const { date1, date2 } = req.params;
-        const aux = await Ctrl.statistics(date1, date2)
-        return res.status(201).json(aux)
+        const statistics = await Ctrl.statistics(date1, date2);
+        return res.status(200).json(statistics);
     } catch (error) {
-        return res.status(400).json({ message: error.message })
+        return res.status(400).json({ message: error.message });
     }
 });
-orderRouter.get('/order-repor/:dale1/date2/:date2', async (req, res) => {
+
+// Reporte de órdenes
+// Se corrige la URL y los nombres de las variables
+orderRouter.get('/order-report/:date1/to/:date2', async (req, res) => {
     try {
         const { date1, date2 } = req.params;
-        const aux = await Ctrl.reportOrders(date1, date2)
-        return res.status(201).json(aux)
+        const report = await Ctrl.reportOrders(date1, date2);
+        return res.status(200).json(report);
     } catch (error) {
-        return res.status(400).json({ message: error.message })
+        return res.status(400).json({ message: error.message });
     }
 });
 
-
-
-
-module.exports = orderRouter
+module.exports = orderRouter;
