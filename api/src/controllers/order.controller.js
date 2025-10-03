@@ -66,29 +66,63 @@ module.exports = {
     createOrder: async (orderData, products) => {
         const transaction = await sequelize.transaction();
         try {
+            // 1. Validar stock de todos los productos y buscar sus precios actuales
+            const productsToOrder = [];
+            for (const product of products) {
+                const productData = await Product.findByPk(product.id, { transaction });
+
+                if (!productData) {
+                    throw new Error(`Producto con ID ${product.id} no encontrado.`);
+                }
+
+                if (productData.stock < product.quantity) {
+                    throw new Error(
+                        `Stock insuficiente para el producto ${productData.name}. Disponible: ${productData.stock}, solicitado: ${product.quantity}.`
+                    );
+                }
+
+                productsToOrder.push({
+                    id: productData.id,
+                    quantity: product.quantity,
+                    price_at_purchase: productData.discountedPrice, // O productData.price, según tu lógica de negocio
+                    profit_at_purchase: productData.profit_amount,
+                });
+            }
+
+            // 2. Crear la orden
             const newOrder = await Order.create(orderData, { transaction });
 
-            const orderProducts = products.map(product => ({
+            // 3. Crear las entradas en la tabla de unión (Order_Product)
+            const orderProducts = productsToOrder.map(product => ({
                 OrderId: newOrder.id,
                 ProductId: product.id,
                 quantity: product.quantity,
-                price_at_purchase: product.price,
-                profit_at_purchase: product.profit_amount,
+                price_at_purchase: product.price_at_purchase,
+                profit_at_purchase: product.profit_at_purchase,
             }));
-
             await Order_Product.bulkCreate(orderProducts, { transaction });
+
+            // 4. Actualizar el stock de cada producto
+            for (const product of productsToOrder) {
+                await Product.decrement('stock', {
+                    by: product.quantity,
+                    where: { id: product.id },
+                    transaction,
+                });
+            }
+
+            // 5. Confirmar la transacción
             await transaction.commit();
 
-            // Retorna la orden con el formato deseado
+            // 6. Retornar la orden con los detalles calculados
             const orderWithDetails = await calculateOrderDetails(newOrder);
             return orderWithDetails;
 
         } catch (error) {
-            await transaction.rollback();
+            await transaction.rollback(); // Deshacer todas las operaciones en caso de error
             throw new Error(`Error al crear la orden: ${error.message}`);
         }
     },
-
     // Obtiene todas las órdenes, opcionalmente filtradas por código
     getOrders: async (code) => {
         const options = {};
@@ -131,17 +165,7 @@ module.exports = {
         }
         await order.destroy();
         return true;
-    },
+    }
 
-    // Calcula estadísticas de ventas por periodo
-    statistics: async (date1, date2) => {
-        // ... (lógica de estadísticas)
-        return `Estadísticas de ventas entre ${date1} y ${date2}`;
-    },
 
-    // Genera un reporte de órdenes por periodo
-    reportOrders: async (date1, date2) => {
-        // ... (lógica de reporte)
-        return `Reporte de órdenes entre ${date1} y ${date2}`;
-    },
 };

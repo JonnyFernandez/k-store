@@ -14,9 +14,9 @@ authRouter.post("/auth/register", async (req, res) => {
         res.status(200).json(result);
     } catch (error) {
         res.status(400).json({ error: error.message });
-
     }
 });
+
 authRouter.post("/auth/login", async (req, res) => {
     try {
         const data = req.body;
@@ -24,10 +24,10 @@ authRouter.post("/auth/login", async (req, res) => {
         res.status(200).json(result);
     } catch (error) {
         res.status(400).json({ error: error.message });
-
     }
-
 });
+
+
 authRouter.delete("/auth/remove/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -35,20 +35,20 @@ authRouter.delete("/auth/remove/:id", async (req, res) => {
         res.status(200).json(result);
     } catch (error) {
         res.status(400).json({ error: error.message });
-
     }
-
 });
+
+
 authRouter.get("/auth/users", async (req, res) => {
     try {
         const result = await authController.getUsers();
         res.status(200).json(result);
     } catch (error) {
         res.status(400).json({ error: error.message });
-
     }
-
 });
+
+
 
 
 

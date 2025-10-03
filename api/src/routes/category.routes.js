@@ -15,6 +15,7 @@ categoryRouter.post('/category', async (req, res) => {
         return res.status(400).json({ message: error.message })
     }
 });
+
 categoryRouter.get('/category', async (req, res) => {
     try {
         const aux = await Ctrl.getCategories()
@@ -23,6 +24,7 @@ categoryRouter.get('/category', async (req, res) => {
         return res.status(400).json({ message: error.message })
     }
 });
+
 categoryRouter.delete('/category/:id', async (req, res) => {
     try {
         const { id } = req.params;

@@ -68,28 +68,6 @@ orderRouter.delete('/order/:id', async (req, res) => {
     }
 });
 
-// Estadísticas
-// Se corrige la URL y los nombres de las variables
-orderRouter.get('/order-statistics/:date1/to/:date2', async (req, res) => {
-    try {
-        const { date1, date2 } = req.params;
-        const statistics = await Ctrl.statistics(date1, date2);
-        return res.status(200).json(statistics);
-    } catch (error) {
-        return res.status(400).json({ message: error.message });
-    }
-});
 
-// Reporte de órdenes
-// Se corrige la URL y los nombres de las variables
-orderRouter.get('/order-report/:date1/to/:date2', async (req, res) => {
-    try {
-        const { date1, date2 } = req.params;
-        const report = await Ctrl.reportOrders(date1, date2);
-        return res.status(200).json(report);
-    } catch (error) {
-        return res.status(400).json({ message: error.message });
-    }
-});
 
 module.exports = orderRouter;
