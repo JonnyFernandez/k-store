@@ -1,0 +1,203 @@
+.containerDisCat {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    min-width: 300px;
+    margin: auto;
+    overflow: hidden;
+    /* background-color: red; */
+    margin-top: 100px;
+}
+
+/* Sección de categorías y distribuidores */
+.div1, .div2 {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.259);
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+    transition: 0.3s ease-in-out;
+}
+
+/* Botonos flotadored */
+.closeModeal{
+    display: flex;
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.693);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.clearStora {
+    display: flex;
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.693);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+    /* margin-bottom: 20px; */
+}
+
+.clearStora:hover {
+    background: #0056b3;
+}
+/* Botonos flotadored */
+
+
+
+/* Títulos */
+h1 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Etiquetas */
+.label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+/* Select */
+.selectDistributor {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    background: white;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.selectDistributor:hover, 
+.selectDistributor:focus {
+    border-color: #007bff;
+}
+
+/* Contenedor de elementos seleccionados */
+.div2Inside {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Items dentro de la selección */
+.div2Inside div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #e9f2ff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    transition: background 0.3s ease-in-out;
+}
+
+.div2Inside div:hover {
+    background: #d2e4ff;
+}
+
+/* Botón para eliminar */
+
+
+
+/* 📌 Adaptabilidad para MODAL */
+@media (max-width: 768px) {
+    .containerDisCat {       
+        display: flex;
+        width: 200px;
+        height: 500px; 
+        margin-right: 5000px;
+    }
+
+    .div1, .div2 {
+        max-width: 100%;
+    }
+}
+
+/* 📌 Modal Ajustes Extras */
+@media (max-width: 480px) {
+    .containerDisCat {
+        padding: 10px;
+    }
+
+    .div1, .div2 {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 16px;
+    }
+
+    .selectDistributor {
+        padding: 8px;
+        font-size: 13px;
+    }
+    .closeModeal {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.693);
+        color: white;
+        padding: 10px;
+        border-radius: 50%;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        transition: background 0.3s ease;
+        margin-bottom: 20px;
+    }
+    
+    .closeModeal:hover {
+        background: #0056b3;
+    }
+    .clearStora {
+        display: flex;
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.693);
+        color: white;
+        padding: 10px;
+        border-radius: 50%;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        transition: background 0.3s ease;
+        /* margin-bottom: 20px; */
+    }
+    
+    .clearStora:hover {
+        background: #0056b3;
+    }
+    
+    
+}

@@ -1,0 +1,75 @@
+/* Estilo principal del formulario */
+.formContainer {
+    background-color: #ffffff; /* Fondo blanco para contraste */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    max-width: 500px; /* Limita el ancho del formulario */
+    width: 100%; /* Ajusta al contenedor */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    font-family: Arial, sans-serif; /* Fuente moderna y legible */
+    margin: 0 auto; 
+    margin-top: 30px;
+  }
+  
+  .label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333; /* Color de texto */
+    margin-bottom: 8px; /* Espaciado del label */
+    display: block; /* Asegura que los labels ocupen toda la línea */
+  }
+  
+  .select,
+  .input {
+    width: 100%; /* Toma todo el ancho del contenedor */
+    padding: 10px; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño del texto */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    outline: none; /* Quita el borde azul predeterminado */
+    transition: border-color 0.3s ease; /* Transición suave al enfoque */
+  }
+  
+  .select:focus,
+  .input:focus {
+    border-color: #007bff; /* Cambia el color del borde al enfocar */
+  }
+  
+  .button {
+    width: 100%; /* Botón ocupa todo el ancho */
+    padding: 12px 15px; /* Espaciado interno */
+    background-color: #007bff; /* Azul primario */
+    color: #fff; /* Texto blanco */
+    font-size: 1rem; /* Tamaño del texto */
+    font-weight: bold; /* Texto destacado */
+    border: none; /* Sin bordes */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor de clic */
+    transition: background-color 0.3s ease; /* Transición suave al pasar el mouse */
+    margin-top: 15px; /* Espaciado superior */
+  }
+  
+  .button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+  }
+  
+  .button:disabled {
+    background-color: #ccc; /* Color deshabilitado */
+    cursor: not-allowed; /* Cursor deshabilitado */
+  }
+  
+  .errorMessage {
+    color: #dc3545; /* Rojo de error */
+    font-size: 0.9rem;
+    margin-top: 8px;
+    text-align: center;
+  }
+  
+  .formTitle {
+    font-size: 1.5rem; /* Tamaño grande para el título */
+    font-weight: bold;
+    color: #333; /* Texto oscuro */
+    text-align: center; /* Centrado horizontal */
+    margin-bottom: 20px; /* Espaciado inferior */
+  }
+  

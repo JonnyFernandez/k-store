@@ -1,0 +1,152 @@
+.productDetail {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--color-card-bg);
+}
+
+.active {
+    border-left: 5px solid var(--color-success);
+}
+
+.inactive {
+    border-left: 5px solid var(--color-danger);
+    opacity: 0.8;
+}
+
+.featured {
+    border-left: 5px solid var(--color-featured);
+}
+
+.headerDetail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    /* background-color: red; */
+}
+
+.headerDetail h2{
+    color: var(--color-text-secondary00);
+}
+
+.backLink {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+.backLink:hover{
+  background-color: var(--color-primary00);
+}
+
+.infoContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* background-color: red; */
+}
+
+.divLeft {
+    flex: 1;
+    min-width: 300px;
+}
+
+.imageContainer img {
+    display: flex;
+    width: 90%;
+    height: 200px;
+    object-fit: cover;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-text-secondary);
+}
+
+.actionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.actionsContainer button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    color: var(--color-text-secondary00);
+}
+
+
+
+.editButton {
+    background-color: var(--color-primary00);
+    color: var(--color-text-secondary01);
+    width: 100%;
+}
+
+
+.pauseButton {
+    background-color: var(--color-text-secondary);
+    color: var(--color-text-secondary01);
+}
+
+.deleteButton {
+    background-color: var(--color-danger);
+    color: var(--color-text-secondary01);
+}
+
+.featuredButton {
+    background-color: var(--color-featured);
+    color: var(--color-text-secondary01);
+}
+
+.offerButton {
+    background-color: var(--color-warning); 
+}
+
+
+ .actionsContainer button:hover{
+    background-color: var(--color-primary00);
+    /* opacity: 0.85; */
+    transition: 0.3s;
+}
+
+.itemsChar{
+    background-color: var(--color-bg-secondary);
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+    justify-content:space-evenly;
+
+}
+
+.actionsContainer button:hover {
+    opacity: 0.8;
+}
+
+.divRight {
+    flex: 1;
+    min-width: 300px;
+}
+
+.infoInside p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.loader {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 20px;
+}

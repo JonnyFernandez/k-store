@@ -34,7 +34,7 @@ module.exports = {
         if (!isPasswordValid) {
             throw new Error("Invalid password");
         }
-        const aux = { id: user.id, name: user.name, email: user.email, type: user.type }
+        const aux = { id: user.id, name: user.name, email: user.email, type: user.type, active: user.active }
         return aux;
     },
     deleteUser: async (id) => {

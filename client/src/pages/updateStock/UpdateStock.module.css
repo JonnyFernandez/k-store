@@ -1,0 +1,141 @@
+/* UpdateStock.module.css */
+
+.container {
+    padding: 20px;
+    margin: auto;
+    max-width: 800px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.385);
+    margin-top: 20px;
+  }
+  
+  .titleUpdate {
+    text-align: center;
+    font-size: 28px;
+    color:#2a5da8;
+    margin-bottom: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #3a7bd5;
+    box-shadow: 0 0 6px rgba(58, 123, 213, 0.4);
+  }
+  
+  label {
+    font-size: 15px;
+    color: #444;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  
+  .updateSearchButton {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    background-color: #3a7bd5;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .updateSearchButton:hover {
+    background-color: #2a5da8;
+    transform: scale(1.02);
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #218838;
+    transform: scale(1.02);
+  }
+  
+  img {
+    max-width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .form-group > div {
+    flex: 1 1 calc(50% - 15px);
+    min-width: 200px;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .alert {
+    background-color: #ffeeba;
+    color: #856404;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    border: 1px solid #ffdd94;
+  }
+  
+  .imageUpdateContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @media (max-width: 768px) {
+    .form-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+  
+    .updateSearchButton,
+    button[type="submit"] {
+        font-size: 14px;
+        padding: 10px;
+    }
+  }

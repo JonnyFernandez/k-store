@@ -1,0 +1,135 @@
+/* General */
+.home {
+    /* background-color: #f4f5f7; */
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: rebeccapurple; */
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+    padding: 2rem 1rem;
+    /* background-color: rebeccapurple;  */
+}
+
+.title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--color-text-secondary);
+}
+
+
+.calculator {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    /* background-color: red; */
+}
+
+.inputsContainer {
+    flex: 1;
+    max-width: 500px;
+    /* background-color: red; */
+
+}
+
+.inputGroup {
+    position: relative;
+    margin-bottom: .5rem;
+    /* background-color: red; */
+}
+
+.inputGroup input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 2px solid var(--color-text-secondary);
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.inputGroup input:focus {
+    border-color: var(--color-text-secondary);
+}
+
+.inputGroup label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    transition: 0.3s;
+}
+
+.inputGroup input:focus + label,
+.inputGroup input:not(:placeholder-shown) + label {
+    top: -20px;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary00);
+}
+
+.resultsContainer {
+    flex: 1;
+    max-width: 500px;
+    background-color: var(--color-card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    color: #fff;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.resultItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+}
+
+.resultLabel {
+    font-weight: 500;
+}
+
+.resultValue {
+    font-weight: bold;
+}
+
+.resetButton {
+    background-color: var(--color-primary);
+    color: var(--color-text-secondary00);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    margin-top: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.resetButton:hover {
+    background-color: #c82333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .calculator {
+        flex-direction: column;
+    }
+
+    .inputsContainer,
+    .resultsContainer {
+        max-width: 100%;
+    }
+
+    .resultValue {
+        font-size: 1rem;
+    }
+}

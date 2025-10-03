@@ -1,0 +1,134 @@
+/* Estilos base para todas las tarjetas */
+.orderCard,
+.canceledCar,
+.incompletedCar,
+.pendingCard {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover: efecto más suave */
+.orderCard:hover,
+.canceledCar:hover,
+.incompletedCar:hover,
+.pendingCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(105, 100, 100, 0.25);
+}
+
+/* Estado: Completado */
+.orderCard {
+    background-color: var(--color-card-bg);
+    color: var(--color-text-secondary00);
+    border-left: 6px solid var(--color-success);
+    /* background-color: red; */
+
+}
+
+/* Estado: Cancelado */
+.canceledCar {
+    background-color: var(--color-text-secondary);
+    color: var(--color-text-secondary01);
+    border-left: 6px solid var(--color-danger);
+}
+
+/* Estado: Incompleto */
+.incompletedCar {
+    background-color: var(--color-card-bg);
+    color: var(--color-text-secondary00);
+    border-left: 6px solid var(--color-warning);
+}
+
+/* Estado: Pendiente */
+.pendingCard {
+    background-color: var(--color-card-bg);
+    color: var(--color-text-secondary00);
+    border: 6px solid var(--color-warning);
+}
+
+/* Bloques de info */
+.block1 {
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex: 1;
+    /* background-color: red; */
+    width: 200px;
+}
+
+/* Total más destacado */
+.orderCard b:last-child,
+.canceledCar b:last-child,
+.incompletedCar b:last-child,
+.pendingCard b:last-child {
+    font-size: 1.1rem;
+    margin-top: 8px;
+    display: block;
+    font-weight: 600;
+}
+
+/* Contenedor del label */
+.labelCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+  cursor: pointer;
+}
+
+/* Ocultar checkbox original */
+.labelCheckbox input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #888;
+  border-radius: 4px;
+  background-color: #1e1e1e;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Efecto cuando está marcado */
+.labelCheckbox input[type="checkbox"]:checked {
+  background-color: #4cafef;
+  border-color: #4cafef;
+}
+
+/* Check interno */
+.labelCheckbox input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 4px;
+  height: 10px;
+  border: solid #121212;
+  border-width: 0 2px 2px 0;
+  opacity: 0;
+  transform: rotate(45deg) scale(0.8);
+  transition: all 0.2s ease;
+}
+
+.labelCheckbox input[type="checkbox"]:checked::after {
+  opacity: 1;
+  transform: rotate(45deg) scale(1);
+}
+
+/* Hover */
+.labelCheckbox input[type="checkbox"]:hover {
+  border-color: #4cafef;
+}
