@@ -1,86 +1,68 @@
-/* Variables de colores */
 :root {
-  --color-bg-main: #121212;             /* Fondo General: muy oscuro, estilo dashboard moderno */
-  --color-bg-secondary: #1E1E1E;        /* Fondo secundario/paneles: gris oscuro */
-  --color-primary: #3DA9FC;             /* Azul eléctrico suave: botones principales / links */
-  --color-primary00: #2979FF;           /* Azul profundo: hover botones primarios */
-  --color-success: #00C896;             /* Verde esmeralda: éxito */
-  --color-success2:rgb(8, 244, 185);             /* Verde esmeralda: éxito */
-  --color-danger: #FF5C58;              /* Rojo coral: error */
-  --color-warning: #FFD369;             /* Amarillo suave: advertencia */
-  --color-featured: #F78C6B;            /* Naranja salmón: destacado/promociones */
-  --color-text-secondary: #999DA5;      /* Texto gris claro: texto secundario */
-  --color-text-secondary00: #CCC;       /* Más claro para bordes/textos secundarios */
-  --color-text-secondary0: #F5F5F5;     /* Blanco suave: texto principal */
-  --color-text-secondary01: #222;       /* Texto oscuro en zonas claras, si usás alguna */
-  --color-card-bg: #1A1D2D;             /* Fondo de tarjetas: gris oscuro azulado */
-  --color-base2: #e7e2e2;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
 
-/* Estilos Globales */
 body {
   margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: var(--color-bg-main);
-  color: var(--color-text-secondary);
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
-/* Ejemplo de uso de las variables */
-.container {
-  background-color: var(--color-bg-secondary);
-  padding: 1rem;
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
   border-radius: 8px;
-}
-
-.button-primary {
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
-.button-primary:hover {
-  background-color: #3B6F87; /* Un tono más oscuro del azul */
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
 }
-
-.card {
-  background-color: var(--color-card-bg);
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.alert-success {
-  background-color: var(--color-success);
-  color: white;
-  padding: 0.5rem;
-  border-radius: 4px;
-}
-
-.alert-danger {
-  background-color: var(--color-danger);
-  color: white;
-  padding: 0.5rem;
-  border-radius: 4px;
-
-}
-
-/* :root {
-  --color-base: #e3dede;
-  --color-base2: #f4f4f4;
-  --color-base3: rgb(173, 90, 12);
-  --color-primary: #007bff;
-  --color-accent: #ff6347;
-  --p-color:#555;
-  --warnin:#ffcc00;
-  --delete:#ff4d4d;
-  --acept:#4caf50;
-} */
-
-
- 
