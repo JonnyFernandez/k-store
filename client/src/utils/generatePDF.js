@@ -65,11 +65,18 @@ const generarPDF = (productos, client, currentDate, surcharge) => {
         y += 6;
         doc.text(`Nombre/Razón Social: ${client?.name || '---'}`, 20, y);
         y += 6;
-        doc.text(`CUIT/DNI: ${client?.cuit || '---'}`, 20, y);
-        y += 6;
-        doc.text(`Teléfono: ${client?.phone || '---'}`, 20, y);
-        y += 6;
-        doc.text(`Observaciones: ${client?.review || '---'}`, 20, y);
+        if (client?.cuit) {
+            doc.text(`CUIT/DNI: ${client?.cuit || '---'}`, 20, y);
+            y += 6;
+        }
+        if (client?.phone) {
+            doc.text(`Teléfono: ${client?.phone || '---'}`, 20, y);
+            y += 6;
+        }
+        if (client?.review) {
+
+            doc.text(`Observaciones: ${client?.review || '---'}`, 20, y);
+        }
     }
 
 

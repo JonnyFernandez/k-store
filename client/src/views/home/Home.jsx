@@ -210,6 +210,14 @@ const Home = () => {
         setSearchQuery('')
     };
 
+    // const client = {
+    //     name: "pepe",
+    //     cuit: "20941018646",
+    //     phone: '5047727',
+    //     review: "hola pendejo"
+
+    // }
+
     const createPDF = () => generarPDF(cart.products, undefined, undefined, surcharge);
 
     const productosFiltrados = cart.products.filter(prod => !prod.id.toString().includes("x"));
@@ -463,13 +471,13 @@ const Home = () => {
                                                     {product.discount > 0 ? (
                                                         <>
                                                             <span className={LS.originalPrice}>{formatCurrency(product.price)}</span>
-                                                            <span className={LS.discountedPrice}>{formatCurrency(product.discountedPrice)}</span>
+                                                            <span className={LS.discountedPrice}>{formatCurrency(product.discountedPrice * (1 + surcharge / 100))}</span>
                                                         </>
                                                     ) : (
-                                                        formatCurrency(product.price)
+                                                        formatCurrency(product.price * (1 + surcharge / 100))
                                                     )}
                                                 </td>
-                                                <td>{formatCurrency(subtotal)}</td>
+                                                <td>{formatCurrency(subtotal * (1 + surcharge / 100))}</td>
                                                 <td className={LS.actions}>
                                                     <button
                                                         className={`${LS.pauseButton} ${isPaused ? LS.paused : ""}`}
