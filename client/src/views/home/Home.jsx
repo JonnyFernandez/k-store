@@ -12,7 +12,7 @@ import { getProducts, createOrder } from '../../api/product';
 
 const Home = () => {
 
-    const currentDate = new Date().toISOString().split('T')[0];
+
     const [prod, setProd] = useState(null)
 
     const fetchData = async () => {
@@ -26,8 +26,6 @@ const Home = () => {
 
     const [searchQuery, setSearchQuery] = useState('')
     const [copied, setCopied] = useState(false);
-
-
     const products = prod || [];
 
     // Filtrar productos por nombre o código
@@ -47,7 +45,7 @@ const Home = () => {
         id: idGenerator(),
         code: idGenerator(),
         name: '',
-        price: 0,
+        discountedPrice: 0,
         profit_amount: 0,
         quantity: 0
     });
@@ -60,13 +58,6 @@ const Home = () => {
 
     // Estado inicial con la fecha actual
     const [newDate, setNewDate] = useState(today);
-
-    // Si querés sincronizar algo cuando cambia (opcional)
-    // useEffect(() => {
-    //     console.log("Fecha seleccionada:", newDate);
-    // }, [newDate]);
-
-
 
     const [pausedProducts, setPausedProducts] = useState([]);
 
@@ -87,16 +78,23 @@ const Home = () => {
     const addProdToCart = () => {
         setCart((prevCart) => ({
             ...prevCart,
-            products: [...prevCart.products, manualProd],
+            products: [
+                ...prevCart.products,
+                {
+                    ...manualProd,
+                    discountedPrice: manualProd.discountedPrice, // 👈 clave para incluirlo en el total
+                },
+            ],
         }));
-    }
+    };
+
 
     useEffect(() => {
         localStorage.setItem("products", JSON.stringify(cart.products));
     }, [cart.products]);
 
     // Add product to cart
-    const addProductToCart = (id, code, name, price, profit_amount, quantity = 1) => {
+    const addProductToCart = (id, code, name, discountedPrice, profit_amount, quantity = 1) => {
         setCart((prevCart) => {
             const existingProduct = prevCart.products.find((product) => product.id === id);
 
@@ -106,7 +104,7 @@ const Home = () => {
                         ? { ...product, quantity: product.quantity + quantity }
                         : product
                 )
-                : [...prevCart.products, { id, code, name, price, profit_amount, quantity }];
+                : [...prevCart.products, { id, code, name, discountedPrice, profit_amount, quantity }];
 
 
             return {
@@ -152,7 +150,7 @@ const Home = () => {
                 product.id,
                 product.code,
                 product.name,
-                product.price,
+                product.discountedPrice,
                 product.profit_amount
             );
 
@@ -212,7 +210,8 @@ const Home = () => {
         setSearchQuery('')
     };
 
-    const createPDF = () => generarPDF(cart.products)
+    const createPDF = () => generarPDF(cart.products, undefined, undefined, surcharge);
+
     const productosFiltrados = cart.products.filter(prod => !prod.id.toString().includes("x"));
 
     const updateProductQuantity = (id, newQuantity) => {
@@ -254,7 +253,7 @@ const Home = () => {
             "payment_method": payment,
             "seller": "Vendedor A"
         },
-        products: productosFiltrados.map(({ id, quantity, price, profit_amount }) => ({ id, quantity, price, profit_amount })),
+        products: productosFiltrados.map(({ id, quantity, discountedPrice, profit_amount }) => ({ id, quantity, discountedPrice, profit_amount })),
     };
     // console.log(data);
     const clearCart = async () => {
@@ -329,10 +328,6 @@ const Home = () => {
         }
     };
 
-
-
-
-
     const formatCurrency = (value) => {
         return new Intl.NumberFormat("es-AR", {
             style: "currency",
@@ -356,6 +351,7 @@ const Home = () => {
             <div className={LS.selerContainer}>
                 <div className={LS.selerLeft}>
                     <div className={LS.selerLeftHeader}>
+                        <button className={LS.menuButton} >Menu</button>
                         <input
                             type="text"
                             onKeyDown={(e) => {
@@ -374,9 +370,7 @@ const Home = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className={LS.manualInp}
                         />
-                        <div className={LS.addManualButtonCont}>
-                            <button className={LS.addManualButton} onClick={showManual}>Agregar Manual</button>
-                        </div>
+
 
 
                     </div>
@@ -507,7 +501,6 @@ const Home = () => {
                             ⚠ Hay {pausedProducts.length} producto(s) pausado(s) — no se incluyen en el total.
                         </p>
                     )}
-                    {/* Datos del cliente---------------------------------------- */}
                     <div className={LS.selerLeftCleint}>
                         {<PaymentMethod payment={payment} setPayment={setPayment} />}
                     </div>
@@ -515,12 +508,10 @@ const Home = () => {
 
                 </div>
                 <div className={LS[moneyColor()]}>
-                    {/* ----------------------------------------------------------------------------------------------------------------------------------------------------- */}
+
                     <div className={LS.headerRightMount}>
                         <h3>
                             Total: {total > 0 ? formatCurrency(total) : '00.00'}
-
-
                             <button
                                 onClick={() => {
                                     navigator.clipboard.writeText(total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
@@ -538,13 +529,9 @@ const Home = () => {
 
                         {appliedSurchage > 0 && <h6>Recargo: {formatCurrency(appliedSurchage)}</h6>}
                     </div>
-
-
                     <div className={LS.checkboxDivHome}>
                         <p >{textShoyMethod}</p>
                     </div>
-
-
 
                     <div className={LS.discountAndRecarg}>
                         <div className={LS.inputGroup}>
@@ -593,28 +580,18 @@ const Home = () => {
                         </div>
                     </div>
 
-
-
                     <div className={LS.facturaComp}>
                         <button className={LS.facture} onClick={createPDF}>Comprobante</button>
                         <button className={LS.facture2} onClick={clearCart}>Vaciar carrito</button>
                         <button className={LS.refresProd} onClick={fetchData}>Refresh</button>
                     </div>
-
-
                     {deliveryAmount !== 0 && <button className={LS.facture0} onClick={sendOrder}>Finalizar</button>}
-
-
-
-
 
                 </div>
             </div>
 
             <div className={LS.selerFooter}>
-                {/* <div>
-                    <b>Fecha:</b> {moment(newDate).format("DD/MM/YYYY")}
-                </div> */}
+
                 <label htmlFor="">Fecha:
 
                     <input

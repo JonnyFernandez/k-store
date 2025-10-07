@@ -73,8 +73,8 @@ const FormManualProd = ({ manualProd, setManualProd, showManual, addProdToCart }
                     <label className="label-add-prod" htmlFor="">Precio:
                         <input
                             type="number"
-                            name="price"
-                            value={manualProd.price}
+                            name="discountedPrice"
+                            value={manualProd.discountedPrice}
                             onChange={handleChange}
                             placeholder="Precio"
                             // required

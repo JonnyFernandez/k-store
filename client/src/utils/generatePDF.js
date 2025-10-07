@@ -1,7 +1,7 @@
 import { jsPDF } from "jspdf";
 import logo from '../assets/grillo_negro_final.png'
 
-const generarPDF = (productos, client, currentDate) => {
+const generarPDF = (productos, client, currentDate, surcharge) => {
     // console.log(currentDate);
 
 
@@ -11,9 +11,9 @@ const generarPDF = (productos, client, currentDate) => {
 
             return `${day}/${month}/${year}`;
         }
-
         return new Date(date).toLocaleDateString("es-AR");
     };
+
 
 
 
@@ -56,19 +56,21 @@ const generarPDF = (productos, client, currentDate) => {
 
     // // --- Datos del Cliente
     let y = 60;
-    // doc.setFont("helvetica", "bold");
-    // doc.setFontSize(10);
-    // doc.text("Datos del Cliente", 20, y);
-    // doc.setFont("helvetica", "normal");
-    // doc.setFontSize(9);
-    // y += 6;
-    // doc.text(`Nombre/Razón Social: ${client?.name || '---'}`, 20, y);
-    // y += 6;
-    // doc.text(`CUIT/DNI: ${client?.cuit || '---'}`, 20, y);
-    // y += 6;
-    // doc.text(`Teléfono: ${client?.phone || '---'}`, 20, y);
-    // y += 6;
-    // doc.text(`Observaciones: ${client?.review || '---'}`, 20, y);
+    if (client?.name) {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+        doc.text("Datos del Cliente", 20, y);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        y += 6;
+        doc.text(`Nombre/Razón Social: ${client?.name || '---'}`, 20, y);
+        y += 6;
+        doc.text(`CUIT/DNI: ${client?.cuit || '---'}`, 20, y);
+        y += 6;
+        doc.text(`Teléfono: ${client?.phone || '---'}`, 20, y);
+        y += 6;
+        doc.text(`Observaciones: ${client?.review || '---'}`, 20, y);
+    }
 
 
     // --- Tabla de productos
@@ -98,7 +100,7 @@ const generarPDF = (productos, client, currentDate) => {
         const codigo = prod.code?.slice(-4) || "----";
         const producto = prod.name || "Sin nombre";
         const cantidad = Number(prod.quantity) || 1;
-        const precio = Number(prod.price) || 0;
+        const precio = surcharge ? (Number(prod.discountedPrice) * (1 + surcharge / 100)) || 0 : Number(prod.discountedPrice)
         const total = cantidad * precio;
         totalCompra += total;
 
