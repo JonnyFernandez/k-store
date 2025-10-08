@@ -3,10 +3,11 @@ import Swal from "sweetalert2";
 import { FaRegTrashAlt, FaCopy } from "react-icons/fa";
 import LS from './Home.module.css'
 import { codeGenerator, idGenerator } from '../../utils/genetareCode';
-import { FormManualProd, PaymentMethod } from '../../components'
+import { FormManualProd, PaymentMethod, SideBar } from '../../components'
 import generarPDF from "../../utils/generatePDF";
 import moment from 'moment';
 import { getProducts, createOrder } from '../../api/product';
+import { Menu } from "lucide-react";
 
 
 
@@ -50,11 +51,12 @@ const Home = () => {
         quantity: 0
     });
 
+    const today = moment().format("YYYY-MM-DD");
     const [showManualAdd, setShowManualAdd] = useState(false);
     const [payment, setPayment] = useState('cash');
     const [surcharge, setSurcharge] = useState(10);
     const [deliveryAmount, setDeliveryAmount] = useState(0);
-    const today = moment().format("YYYY-MM-DD");
+    const [isOpen, setIsOpen] = useState(false);
 
     // Estado inicial con la fecha actual
     const [newDate, setNewDate] = useState(today);
@@ -356,10 +358,27 @@ const Home = () => {
     return (
         <div className={LS.localSele}>
             {showManualAdd && <FormManualProd manualProd={manualProd} setManualProd={setManualProd} showManual={showManual} addProdToCart={addProdToCart} />}
+
+
+            <SideBar isOpen={isOpen} onClose={() => setIsOpen(false)} />
             <div className={LS.selerContainer}>
                 <div className={LS.selerLeft}>
                     <div className={LS.selerLeftHeader}>
-                        <button className={LS.menuButton} >Menu</button>
+
+                        <button
+                            onClick={() => setIsOpen(true)}
+                            style={{
+                                padding: "10px",
+                                background: "#111827",
+                                color: "#fff",
+                                borderRadius: "8px",
+                                margin: "1rem",
+                                cursor: "pointer",
+                                border: "none",
+                            }}
+                        >
+                            <Menu size={22} />
+                        </button>
                         <input
                             type="text"
                             onKeyDown={(e) => {
@@ -378,10 +397,10 @@ const Home = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className={LS.manualInp}
                         />
-
-
-
                     </div>
+
+
+
 
                     {/* ----------------------------------------------------------------------------- */}
                     <div className={LS.selerLeftBody}>
@@ -592,6 +611,7 @@ const Home = () => {
                         <button className={LS.facture} onClick={createPDF}>Comprobante</button>
                         <button className={LS.facture2} onClick={clearCart}>Vaciar carrito</button>
                         <button className={LS.refresProd} onClick={fetchData}>Refresh</button>
+                        <button className={LS.addManual} onClick={fetchData}>Agregar manual</button>
                     </div>
                     {deliveryAmount !== 0 && <button className={LS.facture0} onClick={sendOrder}>Finalizar</button>}
 

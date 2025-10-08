@@ -121,7 +121,7 @@
   background-color: var(--color-primary-hover);
 }
 
-.facture, .facture2, .refresProd,.facture0{
+.facture, .facture2, .refresProd,.facture0,.addManual{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,8 +165,14 @@
    background-color: var(--color-success);
    width: 100%;
    font-weight: bolder;
-
 }
+.addManual{
+  width: 300px;
+}
+.addManual:hover{
+  background-color: var(--color-primary00) ;
+} 
+
 
 .selerLeftBody {
   width: 100%;
