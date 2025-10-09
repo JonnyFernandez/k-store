@@ -14,6 +14,11 @@
   transition: left 0.3s ease;
 }
 
+.menu{
+  text-decoration: none;
+  color: var(--color-base2);
+}
+
 .open {
   left: 0;
 }
@@ -47,7 +52,7 @@
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  gap: 0.5rem;
+  gap: 12px;
 }
 
 .link {
@@ -58,7 +63,7 @@
   text-decoration: none;
   color: #d1d5db;
   border-radius: 8px;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: all 0.2s ease-in-out;
 }
 
 .link:hover {

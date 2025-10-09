@@ -1,0 +1,20 @@
+.navContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    
+}
+.box1, .box2{
+    width: 100px;
+    height: 60px;
+    /* background-color: red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box2{
+    width: 500px;
+    justify-content: start;
+}
