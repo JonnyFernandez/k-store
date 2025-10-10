@@ -3,3 +3,30 @@
     height: 590px;
     border-top: 1px solid snow;
 }
+
+.catalogHeader{
+    width: 100%;
+    height: 80px;
+    background-color: var(--color-danger);
+    background-color: rgb(1, 64, 192);
+    /* background-color: var(--color-primary00); */
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.cardContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.cardDiv {
+    background-color: var(--color-card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

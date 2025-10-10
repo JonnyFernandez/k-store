@@ -41,6 +41,7 @@ const Home = () => {
             products: savedProducts ? JSON.parse(savedProducts) : [],
         };
     });
+    console.log(cart.products);
 
     const [manualProd, setManualProd] = useState({
         id: idGenerator(),
@@ -80,15 +81,9 @@ const Home = () => {
     const addProdToCart = () => {
         setCart((prevCart) => ({
             ...prevCart,
-            products: [
-                ...prevCart.products,
-                {
-                    ...manualProd,
-                    discountedPrice: manualProd.discountedPrice, // 👈 clave para incluirlo en el total
-                },
-            ],
+            products: [...prevCart.products, manualProd],
         }));
-    };
+    }
 
 
     useEffect(() => {
@@ -422,14 +417,17 @@ const Home = () => {
                                                 <td>{String(product.code).slice(-4)}</td>
                                                 <td>{product.name}</td>
                                                 <td>{product.stock}</td>
-                                                {product.discount > 0 ? (
-                                                    <>
-                                                        <span className={LS.originalPrice}>{formatCurrency(product.price)}</span>
-                                                        <span className={LS.discountedPrice}>{formatCurrency(product.discountedPrice)}</span>
-                                                    </>
-                                                ) : (
-                                                    formatCurrency(product.price)
-                                                )}
+                                                <td>
+                                                    {product.discount > 0 ? (
+                                                        <>
+                                                            <span className={LS.originalPrice}>{formatCurrency(product.price)}</span>
+                                                            <span className={LS.discountedPrice}>{formatCurrency(product.discountedPrice)}</span>
+                                                        </>
+                                                    ) : (
+                                                        formatCurrency(product.price)
+                                                    )}
+                                                </td>
+
                                                 <td>
                                                     <button
                                                         className={`${LS.addButton} ${product.stock === 0 || product.isActive === false ? LS.disabledButton : ""}`}
@@ -465,7 +463,7 @@ const Home = () => {
                                 {cart?.products.length > 0 ? (
                                     cart.products.slice().reverse().map((product, index) => {
                                         const isPaused = pausedProducts.includes(product.id);
-                                        const priceToShow = product.discount > 0 ? product.discountedPrice : product.price;
+                                        const priceToShow = product.discount > 0 ? product.discountedPrice : product.discountedPrice;
                                         const subtotal = isPaused ? 0 : product.quantity * priceToShow;
 
                                         return (
@@ -489,11 +487,11 @@ const Home = () => {
                                                 <td>
                                                     {product.discount > 0 ? (
                                                         <>
-                                                            <span className={LS.originalPrice}>{formatCurrency(product.price)}</span>
+                                                            <span className={LS.originalPrice}>{formatCurrency(product.discountedPrice)}</span>
                                                             <span className={LS.discountedPrice}>{formatCurrency(product.discountedPrice * (1 + surcharge / 100))}</span>
                                                         </>
                                                     ) : (
-                                                        formatCurrency(product.price * (1 + surcharge / 100))
+                                                        formatCurrency(product.discountedPrice * (1 + surcharge / 100))
                                                     )}
                                                 </td>
                                                 <td>{formatCurrency(subtotal * (1 + surcharge / 100))}</td>
@@ -611,7 +609,7 @@ const Home = () => {
                         <button className={LS.facture} onClick={createPDF}>Comprobante</button>
                         <button className={LS.facture2} onClick={clearCart}>Vaciar carrito</button>
                         <button className={LS.refresProd} onClick={fetchData}>Refresh</button>
-                        <button className={LS.addManual} onClick={fetchData}>Agregar manual</button>
+                        <button className={LS.addManual} onClick={showManual}>Agregar manual</button>
                     </div>
                     {deliveryAmount !== 0 && <button className={LS.facture0} onClick={sendOrder}>Finalizar</button>}
 
