@@ -9,7 +9,8 @@ const Card = ({
     minStock,
     price,
     code,
-    discountPrice,
+    discountedPrice,
+    profit_amount,
     discount,
     isActive,
     isFeatured,
@@ -17,7 +18,7 @@ const Card = ({
     const defaultImage =
         "https://i.pinimg.com/736x/29/f9/00/29f9000209f6361831d6696b7058746c.jpg";
 
-    const finalPrice = discountPrice || 0;
+    const finalPrice = discountedPrice || 0;
 
     const getStockClass = (stock, minStock) => {
         if (stock === 0) return c.notStock;
@@ -45,7 +46,7 @@ const Card = ({
         } else {
             updated = [
                 ...saved,
-                { id, code, name, discountPrice: finalPrice, quantity: newQty },
+                { id, code, name, discount, price, discountedPrice, quantity: newQty, profit_amount },
             ];
         }
 

@@ -8,16 +8,16 @@ const FormManualProd = ({ manualProd, setManualProd, showManual, addProdToCart }
         const { name, value } = e.target;
         setManualProd((prev) => ({
             ...prev,
-            [name]: name === "price" || name === "quantity" ? Number(value) : value,
+            [name]: name === "discountedPrice" || name === "quantity" ? Number(value) : value,
         }));
     };
 
 
 
     const sendProd = () => {
-        const { name, price, quantity } = manualProd;
+        const { name, discountedPrice, quantity } = manualProd;
 
-        if (!name || price <= 0 || quantity <= 0) {
+        if (!name || discountedPrice <= 0 || quantity <= 0) {
             Swal.fire({
                 icon: "warning",
                 title: "Campos incompletos",

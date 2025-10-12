@@ -41,7 +41,7 @@ const Home = () => {
             products: savedProducts ? JSON.parse(savedProducts) : [],
         };
     });
-    console.log(cart.products);
+    // console.log(cart.products);
 
     const [manualProd, setManualProd] = useState({
         id: idGenerator(),
@@ -218,6 +218,7 @@ const Home = () => {
     const createPDF = () => generarPDF(cart.products, undefined, undefined, surcharge);
 
     const productosFiltrados = cart.products.filter(prod => !prod.id.toString().includes("x"));
+    const productosAdded = cart.products.filter(prod => prod.id.toString().includes("x"));
 
     const updateProductQuantity = (id, newQuantity) => {
         setCart((prevCart) => {
@@ -248,6 +249,7 @@ const Home = () => {
 
 
 
+    // console.log(cart.products);
 
     const data = {
         "orderData": {
@@ -259,6 +261,7 @@ const Home = () => {
             "seller": "Vendedor A"
         },
         products: productosFiltrados.map(({ id, quantity, discountedPrice, profit_amount }) => ({ id, quantity, discountedPrice, profit_amount })),
+        addedProd: productosAdded.map(({ name, quantity, discountedPrice }) => ({ name, quantity, discountedPrice })),
     };
     // console.log(data);
     const clearCart = async () => {

@@ -1,24 +1,58 @@
 import styleC from './Catalog.module.css'
+import { Card, Nav } from '../../components';
+import { useEffect, useState } from 'react';
+import { getProducts } from '../../api/product';
 
-import { Nav, Card } from '../../components';
+
+
+
 
 const Catalog = () => {
-    const image1 = "https://http2.mlstatic.com/D_NQ_NP_2X_991730-MLA91339480713_082025-F.webp"
 
-    const data = {
-        id: 1,
-        name: "Cloro granulado",
-        image: "https://http2.mlstatic.com/D_NQ_NP_2X_968989-MLA81902562372_012025-F.webp",
-        stock: 9,
-        minStock: 10,
-        price: 1100,
-        code: "x123",
-        discountPrice: 900,
-        discount: 0,
-        isActive: true,
-        isFeatured: true
+    const [products, setProducts] = useState([])
 
+    const fetchFunction = async () => {
+        try {
+            let aux = await getProducts()
+            setProducts(aux.data)
+        } catch (error) {
+            console.log(error);
+
+        }
     }
+
+    useEffect(() => {
+        fetchFunction()
+    }, [])
+    // console.log(products);
+
+    const showCards = () => {
+        return (
+            <>
+                {products.map((item) => (
+                    <div key={item.id} className={styleC.cardDiv}>
+                        <Card
+                            key={item.id}
+
+                            id={item.id}
+                            code={item.code}
+                            name={item.name}
+                            image={item.image}
+                            stock={item.stock}
+                            minStock={item.minStock}
+                            price={item.price}
+                            discountedPrice={item.discountedPrice}  // ✅ corregido
+                            discount={item.discount}
+                            profit_amount={item.profit_amount}
+                        />
+
+                    </div>
+                ))}
+            </>
+        );
+    };
+
+
 
     return (
         <div className={styleC.catalog}>
@@ -33,29 +67,7 @@ const Catalog = () => {
 
 
                 <div className={styleC.cardContainer}>
-                    <div className={styleC.cardDiv}>
-                        <Card id={data.id} name={data.name} image={data.image} stock={data.stock} minStock={data.minStock} price={data.price} code={data.code} discountPrice={data.discountPrice} discount={data.discount} isActive={data.isActive} isFeatured={data.isFeatured} />
-                    </div>
-                    <div className={styleC.cardDiv}>
-                        <Card id={data.id} name={data.name} image={data.image} stock={data.stock} minStock={data.minStock} price={data.price} code={data.code} discountPrice={data.discountPrice} discount={data.discount} isActive={data.isActive} isFeatured={data.isFeatured} />
-                    </div>
-                    <div className={styleC.cardDiv}>
-                        <Card id={data.id} name={data.name} image={data.image} stock={data.stock} minStock={data.minStock} price={data.price} code={data.code} discountPrice={data.discountPrice} discount={data.discount} isActive={data.isActive} isFeatured={data.isFeatured} />
-                    </div>
-                    <div className={styleC.cardDiv}>
-                        <Card id={data.id} name={data.name} image={data.image} stock={data.stock} minStock={data.minStock} price={data.price} code={data.code} discountPrice={data.discountPrice} discount={data.discount} isActive={data.isActive} isFeatured={data.isFeatured} />
-                    </div>
-                    <div className={styleC.cardDiv}>
-                        <Card id={data.id} name={data.name} image={data.image} stock={data.stock} minStock={data.minStock} price={data.price} code={data.code} discountPrice={data.discountPrice} discount={data.discount} isActive={data.isActive} isFeatured={data.isFeatured} />
-                    </div>
-                    <div className={styleC.cardDiv}>
-                        <Card id={data.id} name={data.name} image={data.image} stock={data.stock} minStock={data.minStock} price={data.price} code={data.code} discountPrice={data.discountPrice} discount={data.discount} isActive={data.isActive} isFeatured={data.isFeatured} />
-                    </div>
-                    <div className={styleC.cardDiv}>
-                        <Card id={data.id} name={data.name} image={data.image} stock={data.stock} minStock={data.minStock} price={data.price} code={data.code} discountPrice={data.discountPrice} discount={data.discount} isActive={data.isActive} isFeatured={data.isFeatured} />
-                    </div>
-
-
+                    {showCards()}
                 </div>
             </div>
         </div>
