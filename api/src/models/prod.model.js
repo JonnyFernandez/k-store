@@ -97,7 +97,7 @@ module.exports = (sequelize) => {
                     product.discountedPrice = priceWithoutDiscount - (priceWithoutDiscount * discountRate);
                     product.profit_amount = product.discountedPrice - cost;
 
-                    product.isActive = product.stock > 1;
+                    product.isActive = product.stock >= 2;
                 },
                 beforeUpdate: (product) => {
                     const cost = parseFloat(product.cost) || 0;
@@ -110,7 +110,7 @@ module.exports = (sequelize) => {
                     product.profit_amount = product.discountedPrice - cost;
 
                     if (product.changed('stock')) {
-                        product.isActive = product.stock > 1;
+                        product.isActive = product.stock >= 2;
                     }
                 },
             },

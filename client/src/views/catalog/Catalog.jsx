@@ -33,7 +33,6 @@ const Catalog = () => {
                     <div key={item.id} className={styleC.cardDiv}>
                         <Card
                             key={item.id}
-
                             id={item.id}
                             code={item.code}
                             name={item.name}
@@ -43,6 +42,7 @@ const Catalog = () => {
                             price={item.price}
                             discountedPrice={item.discountedPrice}  // ✅ corregido
                             discount={item.discount}
+                            isActive={item.isActive}
                             profit_amount={item.profit_amount}
                         />
 

@@ -37,18 +37,9 @@ const Card = ({
     const updateLocalStorage = (newQty) => {
         const saved = JSON.parse(localStorage.getItem("products")) || [];
         const exists = saved.find((p) => p.id === id);
-        let updated;
-
-        if (exists) {
-            updated = saved.map((p) =>
-                p.id === id ? { ...p, quantity: newQty } : p
-            );
-        } else {
-            updated = [
-                ...saved,
-                { id, code, name, discount, price, discountedPrice, quantity: newQty, profit_amount },
-            ];
-        }
+        const updated = exists
+            ? saved.map((p) => (p.id === id ? { ...p, quantity: newQty } : p))
+            : [...saved, { id, code, name, discount, price, discountedPrice, quantity: newQty, profit_amount }];
 
         localStorage.setItem("products", JSON.stringify(updated));
     };
@@ -62,10 +53,8 @@ const Card = ({
 
     const handleSubtract = () => {
         const newQty = quantity - 1;
-
         if (newQty >= 0) {
             setQuantity(newQty);
-
             if (newQty === 0) {
                 const saved = JSON.parse(localStorage.getItem("products")) || [];
                 const updated = saved.filter((p) => p.id !== id);
@@ -83,22 +72,24 @@ const Card = ({
             minimumFractionDigits: 2,
         }).format(value);
 
+    const colorCard = stock >= 1 ? "active" : stock === 0 ? "inactive" : "";
+
     return (
-        <div
-            className={`${c.card} ${isActive ? c.active : c.inactive} ${isFeatured ? c.featured : ""
-                }`}
-        >
+        <div className={`${c.card} ${c[colorCard]}`}>
             <div className={c.imageContainer}>
                 <img
                     src={image || defaultImage}
                     alt={name}
                     className={c.cardImage}
                 />
-                {discount && (
+
+                {/* ✅ Condición corregida para evitar mostrar “0” */}
+                {discount > 0 && (
                     <span className={c.discountBadge}>-{discount}% OFF</span>
                 )}
+
                 {!isActive && <span className={c.inactiveBadge}>Inactivo</span>}
-                {isFeatured && <span className={c.featuredBadge}>★ Destacado</span>}
+                {/* {isFeatured && <span className={c.featuredBadge}>★ Destacado</span>} */}
             </div>
 
             <div className={c.cardContent}>
