@@ -6,15 +6,50 @@
     
 }
 .box1, .box2{
-    width: 100px;
+    width: 300px;
     height: 60px;
     /* background-color: red; */
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
 .box2{
     width: 500px;
     justify-content: start;
+}
+
+.backHome {
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-text-secondary00);
+  position: relative;
+  transition: all 0.3s ease;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+/* Efecto de subrayado animado */
+.backHome::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #00bcd4, #2196f3);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.backHome:hover {
+  color: #2196f3;
+  background-color: rgba(33, 150, 243, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+}
+
+.backHome:hover::after {
+  width: 100%;
 }

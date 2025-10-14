@@ -3,6 +3,7 @@ import styleNav from "./Nav.module.css";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import SideBar from "../sideBar/SideBar";
+import { NavLink } from "react-router-dom";
 
 const Nav = () => {
     const location = useLocation();
@@ -42,6 +43,7 @@ const Nav = () => {
                 >
                     <Menu size={22} />
                 </button>
+                <NavLink className={styleNav.backHome} to={'/home'}>Inicio</NavLink>
             </div>
 
             <div className={styleNav.box2}>
