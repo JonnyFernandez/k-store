@@ -28,3 +28,10 @@ export const getProvider = async () => await axios.get('/provider');
 export const createProvider = async (data) => await axios.post('/provider', data);
 export const updateProvider = async (id, data) => await axios.put(`/provider/${id}`, data);
 export const deleteProvider = async (id) => await axios.delete(`/provider/${id}`);
+
+// !! Stats
+export const getStatistics = (date1, date2) => axios.get(`/stats/${date1}/to/${date2}`);
+export const getReportOrders = (date1, date2) => axios.get(`/report/${date1}/to/${date2}`);
+export const getReportStock = () => axios.get('/report-stock');
+
+// !! Users
