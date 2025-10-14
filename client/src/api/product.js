@@ -31,7 +31,7 @@ export const deleteProvider = async (id) => await axios.delete(`/provider/${id}`
 
 // !! Stats
 export const getStatistics = (date1, date2) => axios.get(`/stats/${date1}/to/${date2}`);
-export const getReportOrders = (date1, date2) => axios.get(`/report/${date1}/to/${date2}`);
-export const getReportStock = () => axios.get('/report-stock');
+export const getReportOrders = (date1, date2) => axios.get(`/report/${date1}/to/${date2}`); //
+export const getReportStock = () => axios.get('/report-stock'); //
 
 // !! Users
