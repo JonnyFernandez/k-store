@@ -47,7 +47,7 @@ const Nav = () => {
             </div>
 
             <div className={styleNav.box2}>
-                {currentTitle && <h1 className={styleNav.title}>{currentTitle}</h1>}
+                {currentTitle && <h1 className={styleNav.titleNav}>{currentTitle}</h1>}
             </div>
 
             <SideBar isOpen={isOpen} onClose={() => setIsOpen(false)} />

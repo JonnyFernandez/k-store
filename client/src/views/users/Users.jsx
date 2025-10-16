@@ -168,7 +168,7 @@ const Users = () => {
                                     <th>Nombre</th>
                                     <th>Email</th>
                                     <th>Tipo</th>
-                                    <th>Activo</th>
+                                    {/* <th>Activo</th> */}
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -178,9 +178,9 @@ const Users = () => {
                                         <td>{user.name}</td>
                                         <td>{user.email}</td>
                                         <td>{user.type}</td>
-                                        <td>{user.active ? '✅' : '❌'}</td>
+                                        {/* <td>{user.active ? '✅' : '❌'}</td> */}
                                         <td>
-                                            <button className={styleU.btnEdit}>Editar</button>
+                                            {/* <button className={styleU.btnEdit}>Editar</button> */}
                                             <button className={styleU.btnDelete} onClick={() => handleDelete(user.id)}>Eliminar</button>
                                         </td>
                                     </tr>
