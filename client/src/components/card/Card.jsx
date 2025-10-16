@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import c from "./Card.module.css";
+import { NavLink } from "react-router-dom";
 
 const Card = ({
     id,
@@ -76,7 +77,7 @@ const Card = ({
 
     return (
         <div className={`${c.card} ${c[colorCard]}`}>
-            <div className={c.imageContainer}>
+            <NavLink to={`/update-prod/${id}`} className={c.imageContainer}>
                 <img
                     src={image || defaultImage}
                     alt={name}
@@ -90,7 +91,7 @@ const Card = ({
 
                 {!isActive && <span className={c.inactiveBadge}>Inactivo</span>}
                 {/* {isFeatured && <span className={c.featuredBadge}>★ Destacado</span>} */}
-            </div>
+            </NavLink>
 
             <div className={c.cardContent}>
                 <h2 className={c.cardTitle}>{name}</h2>

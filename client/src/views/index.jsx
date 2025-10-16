@@ -9,6 +9,7 @@ import Users from "./users/Users";
 import Category from "./category/Category";
 import Distribuitor from "./distribuitor/Distribuitor";
 import OrderDetails from "./orderDetails/OrderDetails";
+import UpdateProduct from "./updateProduct/UpdateProduct";
 
 
-export { Home, Catalog, AddProduct, SalesReport, StockReport, Statistics, UpdateStock, Users, Category, Distribuitor, OrderDetails }
+export { Home, Catalog, AddProduct, SalesReport, StockReport, Statistics, UpdateStock, Users, Category, Distribuitor, OrderDetails, UpdateProduct }

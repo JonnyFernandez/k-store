@@ -9,6 +9,7 @@
   color: #f0f0f0;
   background-color: #1a1a1d;
   min-height: 100vh;
+  border-top: 1px solid snow;
 }
 
 .title {

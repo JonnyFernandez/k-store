@@ -117,7 +117,7 @@ const OrderDetails = () => {
                     </div>}
                     <div className={styleDetails.card}>
                         <h4>Recargo</h4>
-                        <p>${order.surcharge}</p>
+                        <p>%{order.surcharge}</p>
                     </div>
                     <div className={styleDetails.card}>
                         <h4>Monto Entregado</h4>
