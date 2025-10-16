@@ -34,14 +34,24 @@
 }
 
 /* -------------- */
+
+.headerContain{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  
+}
+
 .catalogHeader {
   display: flex;
-  /* gap: 1rem; */
+  gap: 2rem;
   align-items: center;
   justify-content: space-around;
   padding: 10px;
   /* background: #f5f5f5; */
   border-radius: 8px;
+  width: 95%;
 }
 
 .catalogHeader select,

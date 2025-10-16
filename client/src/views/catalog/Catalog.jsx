@@ -19,7 +19,7 @@ const Catalog = () => {
         search: '',
         lowStock: false
     });
-    // console.log(filters);
+    console.log(filters);
 
     // Cargar datos iniciales
     useEffect(() => {
@@ -83,51 +83,53 @@ const Catalog = () => {
         <div className={styleC.catalog}>
             <Nav />
             <div className={styleC.catalogCont}>
-                <div className={styleC.catalogHeader}>
-                    {/* Categoría */}
-                    <select
-                        name="category"
-                        value={filters.category}
-                        onChange={handleFilterChange}
-                    >
-                        <option value="">Todas las categorías</option>
-                        {categories.map(cat => (
-                            <option key={cat.id} value={cat.name}>{cat.name}</option>
-                        ))}
-                    </select>
+                <div className={styleC.headerContain}>
+                    <div className={styleC.catalogHeader}>
+                        {/* Categoría */}
+                        <select
+                            name="category"
+                            value={filters.category}
+                            onChange={handleFilterChange}
+                        >
+                            <option value="">Todas las categorías</option>
+                            {categories.map(cat => (
+                                <option key={cat.id} value={cat.name}>{cat.name}</option>
+                            ))}
+                        </select>
 
-                    {/* Proveedor */}
-                    <select
-                        name="provider"
-                        value={filters.provider}
-                        onChange={handleFilterChange}
-                    >
-                        <option value="">Todos los proveedores</option>
-                        {providers.map(prov => (
-                            <option key={prov.id} value={prov.name}>{prov.name}</option>
-                        ))}
-                    </select>
+                        {/* Proveedor */}
+                        <select
+                            name="provider"
+                            value={filters.provider}
+                            onChange={handleFilterChange}
+                        >
+                            <option value="">Todos los proveedores</option>
+                            {providers.map(prov => (
+                                <option key={prov.id} value={prov.name}>{prov.name}</option>
+                            ))}
+                        </select>
 
-                    {/* Búsqueda */}
-                    <input
-                        type="text"
-                        name="search"
-                        placeholder="Buscar por nombre o código"
-                        value={filters.search}
-                        onChange={handleFilterChange}
-                    />
+                        {/* Búsqueda */}
+                        <input
+                            type="text"
+                            name="search"
+                            placeholder="Buscar por nombre o código"
+                            value={filters.search}
+                            onChange={handleFilterChange}
+                        />
 
-                    {/* Low Stock */}
-                    <button
-                        onClick={() =>
-                            setFilters(prev => ({ ...prev, lowStock: !prev.lowStock }))
-                        }
-                        className={filters.lowStock ? styleC.activeLowStock : ''}
-                    >
-                        {filters.lowStock ? 'Mostrar Todos' : 'Stock Bajo'}
-                    </button>
+                        {/* Low Stock */}
+                        <button
+                            onClick={() =>
+                                setFilters(prev => ({ ...prev, lowStock: !prev.lowStock }))
+                            }
+                            className={filters.lowStock ? styleC.activeLowStock : ''}
+                        >
+                            {filters.lowStock ? 'Mostrar Todos' : 'Stock Bajo'}
+                        </button>
+                    </div>
+
                 </div>
-
                 {/* Productos */}
                 <div className={styleC.cardContainer}>
                     {products.length > 0 ? (

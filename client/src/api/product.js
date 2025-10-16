@@ -41,3 +41,4 @@ export const getReportStock = () => axios.get('/report-stock'); // !hecho
 export const getUsers = () => axios.get('/auth/users');
 export const registerUser = (data) => axios.post('/auth/register', data);
 export const loginUser = (data) => axios.post('/auth/login', data);
+export const deleteUser = (id) => axios.delete(`/auth/remove/${id}`);
