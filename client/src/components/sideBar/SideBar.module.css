@@ -18,7 +18,9 @@
   text-decoration: none;
   color: var(--color-base2);
 }
-
+.titleH2{
+  color: #fff;
+}
 .open {
   left: 0;
 }

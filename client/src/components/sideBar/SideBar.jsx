@@ -27,7 +27,7 @@ const SideBar = ({ isOpen, onClose }) => {
             >
                 <div className={styleSide.header}>
                     <NavLink className={styleSide.menu} to={'/home'}>
-                        <h2>Menú</h2>
+                        <h2 className={styleSide.titleH2}>Menú</h2>
                     </NavLink>
                     <button onClick={onClose} className={styleSide.closeBtn}>
                         <X size={22} />
