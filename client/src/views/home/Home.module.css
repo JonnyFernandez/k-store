@@ -58,7 +58,7 @@
 /* Estilo cuando el input está enfocado */
 .barCodeInp:focus,
 .manualInp:focus {
-  background-color: var(--color-bg-secondary00);;
+  background-color: var(--color-bg-secondary00);
   box-shadow: 0 0 4px #4e8cff66;
   /* background-color: red; */
   color: var(--color-text-secondary0);
@@ -316,7 +316,7 @@
 .seachClient2 {
   background-color:var(--color-text-secondary);
   font-size: 0.8rem;
-  color: var(--color-text-secondary00);;
+  color: var(--color-text-secondary00);
   padding: 6px 10px;
   border: none;
   border-radius: 4px;

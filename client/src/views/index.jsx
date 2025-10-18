@@ -11,6 +11,7 @@ import Distribuitor from "./distribuitor/Distribuitor";
 import OrderDetails from "./orderDetails/OrderDetails";
 import UpdateProduct from "./updateProduct/UpdateProduct";
 import Login from "./login/Login";
+import Register from "./register/Register";
 
 
-export { Home, Catalog, AddProduct, SalesReport, StockReport, Statistics, UpdateStock, Users, Category, Distribuitor, OrderDetails, UpdateProduct, Login }
+export { Home, Catalog, AddProduct, SalesReport, StockReport, Statistics, UpdateStock, Users, Category, Distribuitor, OrderDetails, UpdateProduct, Login, Register }

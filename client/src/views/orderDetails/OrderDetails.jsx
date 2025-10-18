@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getOrderById } from "../../api/product";
+import { useParams, useNavigate } from "react-router-dom";
+import { getOrderById, updateOrder, deleteOrder } from "../../api/product";
 import { Nav } from "../../components";
 import styleDetails from "./OrderDetails.module.css";
+import Swal from "sweetalert2";
 
 const OrderDetails = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [moreMoney, setMoreMoney] = useState(0)
+    const [count, setCount] = useState(0)
+    // console.log(order.delivery_amount);
+
+
+    const handleMoney = (money) => {
+        setMoreMoney(money)
+    }
 
     useEffect(() => {
         const fetchOrder = async () => {
@@ -21,16 +31,81 @@ const OrderDetails = () => {
             }
         };
         fetchOrder();
-    }, [id]);
+    }, [id, count]);
 
     if (loading) return <p className={styleDetails.loading}>Cargando pedido...</p>;
     if (!order) return <p className={styleDetails.error}>No se encontró el pedido.</p>;
 
+    const goBack = () => {
+        navigate('/reporte-ventas')
+    }
+    const removeOrder = async () => {
+        try {
+            const confirmResult = await Swal.fire({
+                title: "¿Eliminar esta orden?",
+                text: "Esta acción no se puede deshacer.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, eliminar",
+                cancelButtonText: "Cancelar",
+            });
+
+            if (!confirmResult.isConfirmed) return; // Si cancela, no hace nada
+
+            const aux = await deleteOrder(order.id);
+
+            if (aux.status === 200 || aux.status === 201) {
+                await Swal.fire({
+                    title: "Orden eliminada",
+                    text: "La orden fue eliminada y el stock restaurado.",
+                    icon: "success",
+                    confirmButtonColor: "#3085d6",
+                });
+
+                navigate("/reporte-ventas");
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: "No se pudo eliminar la orden.",
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                title: "Error",
+                text: error.message || "Ocurrió un problema al eliminar la orden.",
+                icon: "error",
+                confirmButtonColor: "#d33",
+            });
+        }
+    };
+
+
+    const updateMoney = async () => {
+        let sumatory = parseFloat(order.delivery_amount) + parseFloat(moreMoney)
+        const data = { "delivery_amount": sumatory }
+        const aux = await updateOrder(order.id, data)
+        if (aux.status === 200 || aux.status === 201) {
+            setCount(prev => prev + 1)
+        }
+
+
+    }
+
     return (
         <div className={styleDetails.details}>
             <Nav />
-
             <div className={styleDetails.detailsContainer}>
+                <button className={styleDetails.back} onClick={goBack}>Volver</button>
+                <button className={styleDetails.delete} onClick={removeOrder}>Eliminar</button>
+
+
+
+
+
                 <h1>🧾 Detalles del Pedido</h1>
 
                 <div className={styleDetails.headerInfo}>
@@ -119,10 +194,18 @@ const OrderDetails = () => {
                         <h4>Recargo</h4>
                         <p>%{order.surcharge}</p>
                     </div>
-                    <div className={styleDetails.card}>
+                    {order.debt > 0 && <div className={styleDetails.card}>
                         <h4>Monto Entregado</h4>
                         <p>${parseFloat(order.delivery_amount).toLocaleString("es-AR")}</p>
-                    </div>
+                        <input type="text"
+                            className={styleDetails.inputMoney}
+                            value={moreMoney}
+                            onChange={(e) => {
+                                const value = parseFloat(e.target.value);
+                                handleMoney(Number.isNaN(value) ? 0 : value)
+                            }} />
+                        <button className={styleDetails.back} onClick={updateMoney}>Actualizar</button>
+                    </div>}
                 </div>
             </div>
         </div>

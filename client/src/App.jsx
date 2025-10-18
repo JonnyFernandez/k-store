@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Home, Catalog, AddProduct, SalesReport, StockReport, Statistics, UpdateStock, Users, Category, Distribuitor, OrderDetails, UpdateProduct, Login } from './views'
+import { Home, Catalog, AddProduct, SalesReport, StockReport, Statistics, UpdateStock, Users, Category, Distribuitor, OrderDetails, UpdateProduct, Login, Register } from './views'
 import { Route, Routes } from 'react-router-dom'
 // import './App.css'
 
@@ -10,6 +10,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path='/home' element={<Home />} />
         <Route path='/catalog' element={<Catalog />} />
         <Route path='/agregar-producto' element={<AddProduct />} />

@@ -2,8 +2,19 @@ import { useEffect, useState } from "react";
 import styleC from "./AddProduct.module.css";
 import { Nav } from "../../components";
 import { createProduct, getCategory, getProvider } from "../../api/product";
+import { useNavigate } from 'react-router-dom';
+
 
 const AddProduct = () => {
+
+    const navigate = useNavigate()
+    const savedUser = localStorage.getItem('user')
+    const user = savedUser ? JSON.parse(savedUser) : null
+    // console.log(user);
+
+    useEffect(() => {
+        if (!user) return navigate('/')
+    }, [])
 
     const [categories, setCategories] = useState([])
     const [providers, setProviders] = useState([])

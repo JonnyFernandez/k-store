@@ -13,8 +13,25 @@ import {
     LogOut,
 } from "lucide-react";
 import styleSide from "./SideBar.module.css";
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+
 
 const SideBar = ({ isOpen, onClose }) => {
+    const navigate = useNavigate()
+    const savedUser = localStorage.getItem('user')
+    const user = savedUser ? JSON.parse(savedUser) : null
+    // console.log(user);
+
+    useEffect(() => {
+        if (!user) return navigate('/')
+    }, [])
+
+
+    const finishHim = () => {
+        localStorage.removeItem('user')
+        return navigate('/')
+    }
     return (
         <>
             <div
@@ -40,53 +57,53 @@ const SideBar = ({ isOpen, onClose }) => {
                         <span>Catálogo</span>
                     </Link>
 
-                    <Link to="/agregar-producto" className={styleSide.link}>
+                    {user.type === 'admin' && <Link to="/agregar-producto" className={styleSide.link}>
                         <PlusCircle size={20} />
                         <span>Agregar Producto</span>
-                    </Link>
+                    </Link>}
 
-                    <Link to="/reporte-ventas" className={styleSide.link}>
+                    {user.type === 'admin' && <Link to="/reporte-ventas" className={styleSide.link}>
                         <BarChart2 size={20} />
                         <span>Reporte de Ventas</span>
-                    </Link>
+                    </Link>}
 
-                    <Link to="/reporte-stock" className={styleSide.link}>
+                    {user.type === 'admin' && <Link to="/reporte-stock" className={styleSide.link}>
                         <Package size={20} />
                         <span>Reporte de Stock</span>
-                    </Link>
+                    </Link>}
 
-                    <Link to="/actualizar-stock" className={styleSide.link}>
+                    {user.type === 'admin' && <Link to="/actualizar-stock" className={styleSide.link}>
                         <RefreshCcw size={20} />
                         <span>Actualizar Stock</span>
-                    </Link>
+                    </Link>}
 
-                    <Link to="/estadisticas" className={styleSide.link}>
+                    {user.type === 'admin' && <Link to="/estadisticas" className={styleSide.link}>
                         <TrendingUp size={20} />
                         <span>Estadísticas</span>
-                    </Link>
+                    </Link>}
 
 
 
 
-                    <Link to="/category" className={styleSide.link}>
+                    {user.type === 'admin' && <Link to="/category" className={styleSide.link}>
                         <Tags size={20} />
                         <span>Categoría</span>
-                    </Link>
+                    </Link>}
 
-                    <Link to="/provider" className={styleSide.link}>
+                    {user.type === 'admin' && <Link to="/provider" className={styleSide.link}>
                         <Truck size={20} />
                         <span>Proveedores</span>
-                    </Link>
+                    </Link>}
 
-                    <Link to="/usuario" className={styleSide.link}>
+                    {user.type === 'admin' && <Link to="/usuario" className={styleSide.link}>
                         <Users size={20} />
                         <span>Gestión de Usuario</span>
-                    </Link>
+                    </Link>}
 
-                    <Link to="#" className={styleSide.link}>
+                    <button onClick={() => finishHim()} className={styleSide.end}>
                         <LogOut size={20} />
                         <span>Salir</span>
-                    </Link>
+                    </button>
                 </nav>
 
                 <footer className={styleSide.footer}>

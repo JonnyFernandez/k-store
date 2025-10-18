@@ -8,8 +8,19 @@ import {
     getProductslowStock,
     getProductSearch
 } from '../../api/product';
+import { useNavigate } from 'react-router-dom';
 
 const Catalog = () => {
+    const navigate = useNavigate()
+    const savedUser = localStorage.getItem('user')
+    const user = savedUser ? JSON.parse(savedUser) : null
+    // console.log(user);
+
+    useEffect(() => {
+        if (!user) return navigate('/')
+    }, [])
+
+
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [providers, setProviders] = useState([]);
@@ -19,7 +30,7 @@ const Catalog = () => {
         search: '',
         lowStock: false
     });
-    console.log(filters);
+    // console.log(filters);
 
     // Cargar datos iniciales
     useEffect(() => {
@@ -98,7 +109,7 @@ const Catalog = () => {
                         </select>
 
                         {/* Proveedor */}
-                        <select
+                        {user.type === 'admin' && <select
                             name="provider"
                             value={filters.provider}
                             onChange={handleFilterChange}
@@ -107,7 +118,7 @@ const Catalog = () => {
                             {providers.map(prov => (
                                 <option key={prov.id} value={prov.name}>{prov.name}</option>
                             ))}
-                        </select>
+                        </select>}
 
                         {/* Búsqueda */}
                         <input

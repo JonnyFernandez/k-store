@@ -15,6 +15,16 @@ const UpdateProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const savedUser = localStorage.getItem('user')
+    const user = savedUser ? JSON.parse(savedUser) : null
+    // console.log(user);
+
+    useEffect(() => {
+        if (!user || (user.type !== 'admin')) return navigate('/catalog')
+    }, [])
+
+
+
     const [formData, setFormData] = useState({
         name: '',
         code: '',

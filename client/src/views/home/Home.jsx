@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import Swal from "sweetalert2";
 import { FaRegTrashAlt, FaCopy } from "react-icons/fa";
 import LS from './Home.module.css'
@@ -8,10 +8,20 @@ import generarPDF from "../../utils/generatePDF";
 import moment from 'moment';
 import { getProducts, createOrder } from '../../api/product';
 import { Menu } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Home = () => {
+    const navigate = useNavigate()
+    const savedUser = localStorage.getItem('user')
+    const user = savedUser ? JSON.parse(savedUser) : null
+    const [count, setCount] = useState(0);
+
+
+    useEffect(() => {
+        if (!user) return navigate('/')
+    }, [])
 
 
     const [prod, setProd] = useState(null)
@@ -23,7 +33,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchData()
-    }, []);
+    }, [count]);
 
     const [searchQuery, setSearchQuery] = useState('')
     const [copied, setCopied] = useState(false);
@@ -258,7 +268,7 @@ const Home = () => {
             "surcharge": surcharge,
             "delivery_amount": deliveryAmount,
             "payment_method": payment,
-            "seller": "Vendedor A"
+            "seller": user.name
         },
         products: productosFiltrados.map(({ id, quantity, discountedPrice, profit_amount }) => ({ id, quantity, discountedPrice, profit_amount })),
         addedProd: productosAdded.map(({ name, quantity, discountedPrice }) => ({ name, quantity, discountedPrice })),
@@ -321,6 +331,7 @@ const Home = () => {
                     showConfirmButton: false,
                     timer: 2000 // Se cierra automáticamente después de 2 segundos.
                 });
+                setCount(prev => prev + 1)
             }
         } catch (error) {
             let textError = error.response.data.message
@@ -620,9 +631,10 @@ const Home = () => {
             </div>
 
             <div className={LS.selerFooter}>
+                <h3>{user.type === 'admin' ? 'Admin' : 'Vendedor'}: {user.name}</h3>
+                {/* <h3>{user.type === 'admin' ? 'Administrador' : 'Vendedor'}</h3> */}
 
                 <label htmlFor="">Fecha:
-
                     <input
                         type="date"
                         value={newDate}

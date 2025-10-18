@@ -149,6 +149,8 @@ module.exports = {
 
     // Actualiza los datos de una orden
     updateOrder: async (id, data) => {
+        console.log(data);
+
         const order = await Order.findByPk(id);
         if (!order) {
             return null;
@@ -159,13 +161,52 @@ module.exports = {
 
     // Elimina una orden y sus asociaciones
     deleteOrder: async (id) => {
-        const order = await Order.findByPk(id);
-        if (!order) {
-            return null;
+        const transaction = await sequelize.transaction();
+
+        try {
+            // 1️⃣ Buscar la orden con sus productos y cantidades
+            const order = await Order.findByPk(id, {
+                include: {
+                    model: Product,
+                    through: { attributes: ['quantity'] },
+                },
+                transaction,
+            });
+
+            if (!order) {
+                throw new Error(`Orden con ID ${id} no encontrada.`);
+            }
+
+            // 2️⃣ Restaurar stock de cada producto
+            for (const product of order.Products) {
+                const quantity = product.Order_Product.quantity;
+
+                await Product.increment('stock', {
+                    by: quantity,
+                    where: { id: product.id },
+                    transaction,
+                });
+            }
+
+            // 3️⃣ Eliminar registros en la tabla intermedia (Order_Product)
+            await Order_Product.destroy({
+                where: { OrderId: id },
+                transaction,
+            });
+
+            // 4️⃣ Eliminar la orden
+            await order.destroy({ transaction });
+
+            // 5️⃣ Confirmar la transacción
+            await transaction.commit();
+
+            return { success: true, message: `Orden ${id} eliminada correctamente y stock restaurado.` };
+
+        } catch (error) {
+            await transaction.rollback();
+            throw new Error(`Error al eliminar la orden: ${error.message}`);
         }
-        await order.destroy();
-        return true;
-    }
+    },
 
 
 };

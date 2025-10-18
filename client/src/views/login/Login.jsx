@@ -1,46 +1,51 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import styleLogin from './Login.module.css';
-import { loginUser } from '../../api/product';
+import { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import styleLogin from "./Login.module.css";
+import { loginUser } from "../../api/product";
 
 const Login = () => {
-    const [formData, setFormData] = useState({ email: '', password: '' });
+    const [formData, setFormData] = useState({ email: "", password: "" });
     const navigate = useNavigate();
 
-    // Manejar cambios de input
+    // Verificar usuario logueado
+    useEffect(() => {
+        const savedUser = localStorage.getItem("user");
+        if (savedUser) navigate("/home");
+    }, [navigate]);
+
+    // Manejo de inputs
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    // Manejar envío de formulario
+    // Envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.email || !formData.password) {
-            Swal.fire('⚠️ Campos incompletos', 'Por favor, complete todos los campos.', 'warning');
+        const { email, password } = formData;
+        if (!email || !password) {
+            Swal.fire("⚠️ Campos incompletos", "Por favor, complete todos los campos.", "warning");
             return;
         }
 
         try {
             const response = await loginUser(formData);
-            if (response && response.data) {
-                localStorage.setItem('user', JSON.stringify(response.data));
+            if (response?.data) {
+                localStorage.setItem("user", JSON.stringify(response.data));
                 Swal.fire({
-                    icon: 'success',
-                    title: '¡Bienvenido!',
-                    text: `Hola ${response.data.name || ''}`,
+                    icon: "success",
+                    title: "¡Bienvenido!",
+                    text: `Hola ${response.data.name || ""}`,
                     showConfirmButton: false,
                     timer: 1500,
                 });
-                navigate('/home');
+                navigate("/home");
             }
         } catch (error) {
-            console.error(error);
-            Swal.fire('❌ Error', 'Email o contraseña incorrectos.', 'error');
+            console.error("❌ Error al iniciar sesión:", error);
+            Swal.fire("Error", "Email o contraseña incorrectos.", "error");
         }
     };
 
@@ -74,6 +79,13 @@ const Login = () => {
                 <button type="submit" className={styleLogin.btnLogin}>
                     Ingresar
                 </button>
+
+                <p className={styleLogin.registerText}>
+                    ¿No tienes cuenta?{" "}
+                    <Link to="/register" className={styleLogin.registerLink}>
+                        Crear cuenta
+                    </Link>
+                </p>
             </form>
         </div>
     );
